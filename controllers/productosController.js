@@ -19,9 +19,9 @@ const obtengoPoductoId = (req, res) => {
 
 const agregarProducto = (req, res) => {
   const { body } = req;
-  const producto = productosService.agregarProducto(body);
-  res.json(producto);
-  res.json("producto agregado con exito");
+  const producto = productosService.agregarProducto(body)
+  .then(producto => res.status(200).send(producto))
+  .catch(error => res.status(400).send(error))
 };
 
 const actualizarProducto = (req, res) => {
