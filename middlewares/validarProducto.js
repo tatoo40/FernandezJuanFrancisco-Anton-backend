@@ -1,8 +1,8 @@
 const validarProducto = (req, res, next) => {
-    const { id, descripcion, categoria, precio } = req.body;
+    const { nombre, descripcion, categoria_id, precio } = req.body;
     
-    if (!id || !descripcion || !categoria || !precio) {
-      return res.status(400).json({ error: 'Faltan datos para poderr ingresar el producto' });
+    if (!nombre || !descripcion || !categoria_id || !precio) {
+      return res.status(400).json({ error: 'Faltan datos para poder ingresar el producto' });
     }
   
     // You can add more complex validation rules here if needed

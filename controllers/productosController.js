@@ -2,14 +2,19 @@ const fs = require("fs");
 const productosService = require("../services/productosService");
 
 const obtengoPoductos = (req, res) => {
-  const productos = productosService.obtenerProductos();
-  res.json(productos);
+
+  const productos = productosService.obtenerProductos()
+  .then(producto => res.status(200).send(producto))
+  .catch(error => res.status(400).send(error))
+
+  
 };
 
 const obtengoPoductoId = (req, res) => {
   const { id } = req.params;
-  const producto = productosService.obtenerProductoId(id);
-  res.json(producto);
+  const producto = productosService.obtenerProductoId(id)
+  .then(producto => res.status(200).send(producto))
+  .catch(error => res.status(400).send(error))
 };
 
 const agregarProducto = (req, res) => {
@@ -23,16 +28,18 @@ const actualizarProducto = (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  const producto = productosService.actualizarProducto(id, body);
-  res.json(producto);
-  res.json("producto actualizado con exito");
+  const producto = productosService.actualizarProducto(id, body)  
+  .then(productos = productosService.obtenerProductos()
+  .then(producto => res.status(200).send(producto))
+  .catch(error => res.status(400).send(error)))
+  .catch(error => res.status(400).send(error))
 };
 
 const eliminarProducto = (req, res) => {
   const { id } = req.params;
-  const producto = productosService.eliminarProducto(id);
-  res.json(producto);
-  res.json("Producto eliminado con exito");
+  const producto = productosService.eliminarProducto(id)
+  .then(producto => res.status(200).send(producto))
+  .catch(error => res.status(400).send(error))
 };
 
 module.exports = {

@@ -1,67 +1,119 @@
 const fs = require("fs");
 const archivoService = require("../services/manejoArchivoService");
+const Producto       = require('../models').producto;
 
 // Función para leer los datos del archivo productos.json
-const obtenerProductos = () => {
-  const productos = archivoService.readObjeto("productos.json");
+async function  obtenerProductos() {
+  const productos =  await obtenerProductosBD();
+  console.log(productos)
+  //const usuariosParsed = JSON.parse(usuarios);
   return productos;
 };
 
-const actualizarProducto = (id, body) => {
-  let productos = [];
+async function actualizarProducto (id, body) {
+  
+  
+    const productos =  await actaulizarProductoByIdBD(id,body);
+    console.log(productos)
+    //const usuariosParsed = JSON.parse(usuarios);
+    return productos;
 
-  productos = archivoService.readObjeto("productos.json");
-  if (!Array.isArray(productos)) {
-    productos = [];
+
+};
+
+async function  obtenerProductoId (id) {
+  const productos =  await obtenerProductosByIdBD(id);
+  console.log(productos)
+  //const usuariosParsed = JSON.parse(usuarios);
+  return productos;
+};
+
+async function eliminarProducto (id)  {
+
+
+  const productoEliminado =  await eliminarProductoById(id);
+
+  const productos =  await obtenerProductosBD();
+  console.log(productos)
+  //const usuariosParsed = JSON.parse(usuarios);
+  return productos;
+};
+
+async function agregarProducto(producto){
+  const productos =  await agregarProductoBD(producto);
+  console.log(productos)
+  //const usuariosParsed = JSON.parse(usuarios);
+  return productos;
+};
+
+
+async function agregarProductoBD(producto) {
+  try {
+    const productos = await Producto.create({ nombre: producto.nombre, precio: producto.precio,descripcion: producto.descripcion,categoria_id: producto.categoria_id });
+    return productos;
+  } catch (error) {
+    throw error;
   }
+}
 
-  const producto = productos.find((producto) => producto.id === Number(id));
+async function obtenerProductosBD() {
+  try {
+    const productos = await Producto.findAll();
+    return productos;
+  } catch (error) {
+    throw error;
+  }
+}
 
-  const productosNuevos = productos.map((producto) => {
-    if (producto.id === Number(id)) {
-      return {
-        ...producto,
-        ...body,
-      };
-    }
+
+async function obtenerProductosByIdBD(id) {
+  try {
+    const productos = await Producto.findAll({
+      where: {
+        id: id
+      }
+    });
+    //Book.findById(id
+    return productos;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+async function actaulizarProductoByIdBD(id,body) {
+  try {
+    const productos =  await Producto.update({ 
+      nombre: body.nombre,
+      descripcion:body.descripcion,
+      precio:body.precio,
+      categoria_id:body.categoria_id
+    
+    }, {
+        where: {
+          id: id
+        }
+      }); 
+    //Book.findById(id
+    return productos;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function eliminarProductoById(id) {
+  try {
+    const producto = await Producto.destroy({
+      where: {
+        id: id
+      }
+    });
+    //Book.findById(id
     return producto;
-  });
-  archivoService.saveObjeto("productos.json", productosNuevos);
-  return producto;
-};
-
-const obtenerProductoId = (id) => {
-  const productos = archivoService.readObjeto("productos.json");
-  const producto = productos.find((producto) => producto.id === Number(id));
-  return producto;
-};
-
-const eliminarProducto = (id) => {
-  const productos = archivoService.readObjeto("productos.json");
-  //obtengo el producto a eliminar
-  const producto = productos.find((producto) => producto.id === Number(id));
-
-  //genero nuevo array con productos
-  const productosNuevos = productos.filter(
-    (producto) => producto.id !== Number(id)
-  );
-
-  archivoService.saveObjeto("productos.json", productosNuevos);
-
-  return producto;
-};
-
-const agregarProducto = (producto) => {
-  let productos = [];
-  productos = archivoService.readObjeto("productos.json");
-  if (!Array.isArray(productos)) {
-    productos = [];
+  } catch (error) {
+    throw error;
   }
-
-  productos.push(producto);
-  archivoService.saveObjeto("productos.json", productos);
-  return producto;
-};
+}
 
 module.exports = {
   obtenerProductos,

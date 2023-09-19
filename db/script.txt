@@ -1,0 +1,61 @@
+
+CREATE DATABASE antonDb;
+
+USE antonDb;
+
+
+CREATE TABLE categorias (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50)
+);
+
+INSERT INTO categorias (nombre) VALUES ('menu');
+INSERT INTO categorias (nombre) VALUES ('postre');
+
+
+
+CREATE TABLE productos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10, 2),
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+INSERT INTO productos (nombre, descripcion, precio, categoria_id)
+VALUES ('Milanesa de carne con fritas ', 'La mejor milanesa del pais', 10.50, 1);
+
+INSERT INTO productos (nombre, descripcion, precio, categoria_id)
+VALUES ('Ravioles con tuco', 'Descripción de ravioles con tuco', 15.75, 1);
+
+INSERT INTO productos (nombre, descripcion, precio, categoria_id)
+VALUES ('Merluza a la plancha con papa dore', 'Fresco fresco', 8.99, 1);
+
+INSERT INTO productos (nombre, descripcion, precio, categoria_id)
+VALUES ('Flan con ddl', 'Riquisimo flan con dulce', 12.25, 2);
+
+INSERT INTO productos (nombre, descripcion, precio, categoria_id)
+VALUES ('Martin fierro', 'Un clasisco', 9.50, 2);
+
+
+
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    email VARCHAR(100),
+    password VARCHAR(255)
+);
+
+INSERT INTO usuarios (nombre, email, password) 
+VALUES ('Juan Francisco fernandez', 'jfernandez@gmail.com', md5('cualquier_cosa'));
+
+
+CREATE TABLE novedades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100),
+    contenido TEXT,
+    fecha DATE
+);
+INSERT INTO novedades (titulo, contenido, fecha) 
+VALUES ('Campeonato de truco', 'Aca va la descripcion del campeonato de truco', '2023-07-22');
