@@ -22,7 +22,8 @@ app.use(express.urlencoded({ extended: true })); //para poder leer los datos de 
 app.use(express.json()); //para poder leer los datos de un formulario
 
 
-
+const cors = require('cors');
+app.use(cors())
 
 
 async function iniciarProyecto() {
@@ -47,7 +48,8 @@ app.use("/admin",require("./routes/adminRoute")); //contiene la vista perfil
 
 app.use("/productos",require("./routes/productosRoute"))
 app.use("/usuarios",require("./routes/usuariosRoute"))
-
+app.use("/estados",require("./routes/estadosRoute"))
+app.use("/ordenes",require("./routes/ordenesRoute"))
 
 app.listen(4000, () => {
   console.log("Servidor iniciado en el puerto 4000");

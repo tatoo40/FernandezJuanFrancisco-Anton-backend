@@ -5,7 +5,7 @@ const sequelize = new Sequelize({
   username: 'root',
   password: 'Gardel2615',
   host: 'localhost', // o la dirección de tu servidor de base de datos
-  database: 'antonDb',
+  database: 'ordenesDb',
 });
 
 module.exports = sequelize;

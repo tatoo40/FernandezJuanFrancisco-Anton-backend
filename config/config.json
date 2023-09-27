@@ -2,21 +2,21 @@
   "development": {
     "username": "root",
     "password": "Gardel2615",
-    "database": "antonDb",
+    "database": "ordenesDb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "Gardel2615",
-    "database": "antonDb",
+    "database": "ordenesDb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "Gardel2615",
-    "database": "antonDb",
+    "database": "ordenesDb",
     "host": "localhost",
     "dialect": "mysql"
   }
